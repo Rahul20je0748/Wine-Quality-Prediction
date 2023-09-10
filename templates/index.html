@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wine Quality Prediction</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function predictAndShowPopup() {
+            var form = document.getElementById("prediction-form");
+            var formData = new FormData(form);
+    
+            fetch("/", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(prediction => {
+                var popup = document.getElementById("popup");
+                var popupContent = document.getElementById("popup-content");
+                popupContent.textContent = prediction;
+                popup.style.display = "block";
+            })
+            .catch(error => {
+                console.error("Prediction error:", error);
+            });
+        }
+    
+        function closePopup() {
+            var popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Wine Quality Prediction</h1>
+        <form id="prediction-form" method="post">
+            <label for="input_1">Fixed Acidity:</label>
+            <input type="text" name="input_1"><br>
+            
+            <label for="input_2">Volatile Acidity:</label>
+            <input type="text" name="input_2"><br>
+            
+            <label for="input_3">Citric Acid:</label>
+            <input type="text" name="input_3"><br>
+            
+            <label for="input_4">Residual Sugar:</label>
+            <input type="text" name="input_4"><br>
+            
+            <label for="input_5">Chlorides:</label>
+            <input type="text" name="input_5"><br>
+            
+            <label for="input_6">Free Sulfur Dioxide:</label>
+            <input type="text" name="input_6"><br>
+            
+            <label for="input_7">Total Sulfur Dioxide:</label>
+            <input type="text" name="input_7"><br>
+            
+            <label for="input_8">Density:</label>
+            <input type="text" name="input_8"><br>
+            
+            <label for="input_9">pH:</label>
+            <input type="text" name="input_9"><br>
+            
+            <label for="input_10">Sulphates:</label>
+            <input type="text" name="input_10"><br>
+            
+            <label for="input_11">Alcohol:</label>
+            <input type="text" name="input_11"><br>
+            
+            <button type="button" onclick="predictAndShowPopup()">Predict</button>
+        </form>
+        <div id="popup" class="popup">
+            <div id="popup-content" class="popup-content"></div>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+</body>
+</html>
